@@ -1,0 +1,13 @@
+/* main.css */
+
+/* This file contains the common styles that are used across all the HTML files.
+
+/* Default body font used across all pages */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Custom font for main titles and headings */
+.title-font {
+    font-family: 'Playfair Display', serif;
+}

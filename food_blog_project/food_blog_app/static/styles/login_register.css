@@ -1,0 +1,19 @@
+/* login_register.css */
+
+/* Common properties for the background images on the login and register pages.
+  Both images should cover the container and be centered.
+*/
+.login-bg, .register-bg {
+    background-size: cover;
+    background-position: center;
+}
+
+/* Specific background image for login.html */
+.login-bg {
+    background-image: url('http://static.photos/food/1200x630/4');
+}
+
+/* Specific background image for register.html */
+.register-bg {
+    background-image: url('http://static.photos/food/1200x630/5');
+}
