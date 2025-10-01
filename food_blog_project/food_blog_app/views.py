@@ -6,3 +6,6 @@ def homeView(request):
 
 def loginView(request): 
     return render(request, template_name='food_blog_app/login.html')
+
+def registerView(request): 
+    return render(request, template_name='food_blog_app/register.html')

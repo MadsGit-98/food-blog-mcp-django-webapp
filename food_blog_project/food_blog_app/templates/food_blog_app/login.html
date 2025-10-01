@@ -27,7 +27,7 @@
                         Sign in to your account
                     </h2>
                     <p class="mt-2 text-sm text-gray-600">
-                        Or <a href="" class="font-medium text-amber-600 hover:text-amber-500">register as a new user</a>
+                        Or <a href="{% url 'register' %}"" class="font-medium text-amber-600 hover:text-amber-500">register as a new user</a>
                     </p>
                 </div>
 
@@ -38,7 +38,7 @@
                                 <p>Your username and password didn't match. Please try again.</p>
                             </div>
                         {% endif %}
-                        
+
                         <form action="" method="post" class="space-y-6">
                             {% csrf_token %}
                             <div>
