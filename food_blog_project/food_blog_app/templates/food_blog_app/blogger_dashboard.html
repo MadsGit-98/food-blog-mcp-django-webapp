@@ -1,0 +1,298 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodie Blog | Blogger Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/blogger_dashboard.css' %}">
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar bg-white w-64 border-r border-gray-200 flex-shrink-0 hidden md:block">
+            <div class="p-4 border-b border-gray-200">
+                <span class="title-font text-2xl font-bold text-amber-600">Foodie</span>
+                <p class="text-sm text-gray-500 mt-1">Blogger Dashboard</p>
+            </div>
+            <nav class="p-4">
+                <div class="space-y-2">
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md bg-amber-50 text-amber-700">
+                        <i data-feather="home" class="h-4 w-4 mr-3"></i>
+                        Dashboard
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100">
+                        <i data-feather="edit" class="h-4 w-4 mr-3"></i>
+                        Create New Post
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100">
+                        <i data-feather="file-text" class="h-4 w-4 mr-3"></i>
+                        Drafted Posts
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100">
+                        <i data-feather="book-open" class="h-4 w-4 mr-3"></i>
+                        Published Posts
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100">
+                        <i data-feather="user" class="h-4 w-4 mr-3"></i>
+                        My Profile
+                    </a>
+                </div>
+                <div class="mt-8 pt-4 border-t border-gray-200">
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100">
+                            <i data-feather="log-out" class="h-4 w-4 mr-3"></i> Logout
+                        </button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main content -->
+        <div class="content flex-1 overflow-auto">
+            <!-- Header -->
+            <header class="bg-white shadow-sm">
+                <div class="flex justify-between items-center px-4 sm:px-6 py-4">
+                    <div class="flex items-center">
+                        <button id="mobile-menu-button" class="md:hidden p-2 mr-2 text-gray-500 hover:text-gray-700">
+                            <i data-feather="menu" class="h-5 w-5"></i>
+                        </button>
+                        <h1 class="title-font text-xl font-bold text-gray-900">Welcome back, {{ user.username }}</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                            <i data-feather="bell" class="h-5 w-5"></i>
+                        </button>
+                        <div class="flex items-center">
+                            <img class="h-8 w-8 rounded-full" src="http://static.photos/people/200x200/1" alt="User profile">
+                            <span class="ml-2 text-sm font-medium text-gray-700">{{ user.username }}</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard content -->
+            <main class="p-6">
+                <div class="mb-8">
+                    <h2 class="title-font text-2xl font-bold text-gray-900 mb-4">Quick Actions</h2>
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                        <a href="#" class="bg-white rounded-lg shadow p-6 hover:shadow-md transition duration-300">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-amber-100 text-amber-600">
+                                    <i data-feather="plus" class="h-6 w-6"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="font-medium text-gray-900">Create New Post</h3>
+                                    <p class="text-sm text-gray-500">Start writing a new recipe or article</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="bg-white rounded-lg shadow p-6 hover:shadow-md transition duration-300">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                                    <i data-feather="file-text" class="h-6 w-6"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="font-medium text-gray-900">View Drafts</h3>
+                                    <p class="text-sm text-gray-500">3 unpublished posts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="bg-white rounded-lg shadow p-6 hover:shadow-md transition duration-300">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-green-100 text-green-600">
+                                    <i data-feather="book-open" class="h-6 w-6"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="font-medium text-gray-900">Published Posts</h3>
+                                    <p class="text-sm text-gray-500">12 published recipes</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Drafts Section -->
+                <div class="mb-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="title-font text-2xl font-bold text-gray-900">Recent Drafts</h2>
+                        <a href="#" class="text-sm font-medium text-amber-600 hover:text-amber-500">View all</a>
+                    </div>
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <ul class="divide-y divide-gray-200">
+                            <li class="p-4 hover:bg-gray-50">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="font-medium text-gray-900">Mediterranean Quinoa Salad</h3>
+                                        <p class="text-sm text-gray-500">Last edited 2 days ago</p>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                                            <i data-feather="edit" class="h-4 w-4"></i>
+                                        </button>
+                                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                                            <i data-feather="trash-2" class="h-4 w-4"></i>
+                                        </button>
+                                        <button class="px-3 py-1 text-sm rounded-md bg-amber-600 text-white hover:bg-amber-700">
+                                            Publish
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="p-4 hover:bg-gray-50">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="font-medium text-gray-900">Homemade Pizza Dough</h3>
+                                        <p class="text-sm text-gray-500">Last edited 1 week ago</p>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                                            <i data-feather="edit" class="h-4 w-4"></i>
+                                        </button>
+                                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                                            <i data-feather="trash-2" class="h-4 w-4"></i>
+                                        </button>
+                                        <button class="px-3 py-1 text-sm rounded-md bg-amber-600 text-white hover:bg-amber-700">
+                                            Publish
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="p-4 hover:bg-gray-50">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="font-medium text-gray-900">Chocolate Avocado Mousse</h3>
+                                        <p class="text-sm text-gray-500">Last edited 3 days ago</p>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                                            <i data-feather="edit" class="h-4 w-4"></i>
+                                        </button>
+                                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                                            <i data-feather="trash-2" class="h-4 w-4"></i>
+                                        </button>
+                                        <button class="px-3 py-1 text-sm rounded-md bg-amber-600 text-white hover:bg-amber-700">
+                                            Publish
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div>
+                    <h2 class="title-font text-2xl font-bold text-gray-900 mb-4">Recent Activity</h2>
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <ul class="divide-y divide-gray-200">
+                            <li class="p-4 hover:bg-gray-50">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <div class="p-2 rounded-full bg-green-100 text-green-600">
+                                            <i data-feather="thumbs-up" class="h-4 w-4"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm text-gray-600">
+                                            <span class="font-medium text-gray-900">John Doe</span> liked your <a href="#" class="text-amber-600 hover:text-amber-500">Avocado Toast</a> recipe
+                                        </p>
+                                        <p class="text-xs text-gray-500 mt-1">3 hours ago</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="p-4 hover:bg-gray-50">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <div class="p-2 rounded-full bg-blue-100 text-blue-600">
+                                            <i data-feather="message-square" class="h-4 w-4"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm text-gray-600">
+                                            <span class="font-medium text-gray-900">Jane Smith</span> commented on your <a href="#" class="text-amber-600 hover:text-amber-500">Thai Green Curry</a>
+                                        </p>
+                                        <p class="text-xs text-gray-500 mt-1">1 day ago</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="p-4 hover:bg-gray-50">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <div class="p-2 rounded-full bg-purple-100 text-purple-600">
+                                            <i data-feather="users" class="h-4 w-4"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm text-gray-600">
+                                            <span class="font-medium text-gray-900">5 new followers</span> this week
+                                        </p>
+                                        <p class="text-xs text-gray-500 mt-1">2 days ago</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobile-sidebar" class="fixed inset-0 z-50 hidden bg-gray-900 bg-opacity-50">
+        <div class="relative w-72 h-full bg-white">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <span class="title-font text-xl font-bold text-amber-600">Foodie</span>
+                <button id="mobile-close-button" class="p-2 text-gray-500 hover:text-gray-700">
+                    <i data-feather="x" class="h-5 w-5"></i>
+                </button>
+            </div>
+            <nav class="p-4">
+                <div class="space-y-2">
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md bg-amber-50 text-amber-700">
+                        <i data-feather="home" class="h-4 w-4 mr-3"></i>
+                        Dashboard
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100">
+                        <i data-feather="edit" class="h-4 w-4 mr-3"></i>
+                        Create New Post
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100">
+                        <i data-feather="file-text" class="h-4 w-4 mr-3"></i>
+                        Drafted Posts
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100">
+                        <i data-feather="book-open" class="h-4 w-4 mr-3"></i>
+                        Published Posts
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100">
+                        <i data-feather="user" class="h-4 w-4 mr-3"></i>
+                        My Profile
+                    </a>
+                </div>
+                <div class="mt-8 pt-4 border-t border-gray-200">
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100">
+                        <i data-feather="settings" class="h-4 w-4 mr-3"></i>
+                        Settings
+                    </a>
+                    <a href="index.html" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100">
+                        <i data-feather="log-out" class="h-4 w-4 mr-3"></i>
+                        Logout
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <script src="{% static 'js/blogger_dashboard.js' %}"></script>
+</body>
+</html>
