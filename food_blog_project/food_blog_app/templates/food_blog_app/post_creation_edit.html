@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodie Blog | {% if post %}Edit Post: {{ post.title }}{% else %}Create New Post{% endif %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+</head>
+<body class="text-gray-800 min-h-screen">
+    
+    <!-- Top Navigation Bar -->
+    <header class="bg-white shadow-md sticky top-0 z-10">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="{% url 'dashboard' %}" class="p-2 mr-2 text-gray-500 hover:text-gray-700">
+                        <i data-feather="arrow-left" class="h-5 w-5"></i>
+                    </a>
+                    <span class="title-font text-xl font-bold text-amber-600">Foodie</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button class="p-2 text-gray-500 hover:text-gray-700">
+                        <i data-feather="search" class="h-5 w-5"></i>
+                    </button>
+                    <button class="p-2 text-gray-500 hover:text-gray-700">
+                        <i data-feather="bell" class="h-5 w-5"></i>
+                    </button>
+                    {% if user.isBlogger %}
+                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                            <i data-feather="bar-chart-2" class="h-5 w-5"></i>
+                        </button>
+                    {% endif %}
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="p-2 text-gray-500 hover:text-gray-700">
+                            <i data-feather="log-out" class="h-4 w-4 mr-3"></i> 
+                        </button>
+                    </form>
+                    <div class="flex items-center">
+                        <img class="h-8 w-8 rounded-full" src="http://static.photos/people/200x200/2" alt="User profile">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </header>
+
+    <main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <h1 class="text-3xl sm:text-4xl font-extrabold mb-8 title-font flex items-center">
+            {% if post %}
+                <i data-feather="edit-3" class="h-8 w-8 text-blue-500 mr-3"></i> Editing: {{ post.title }}
+            {% else %}
+                <i data-feather="plus-circle" class="h-8 w-8 text-amber-600 mr-3"></i> Create New Post
+            {% endif %}
+        </h1>
+
+        <!-- Post Form -->
+        
+        <form method="post" action="" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Post Type Selection -->
+            <div class="bg-white p-6 rounded-xl shadow-xl border border-gray-100" data-aos="fade-up">
+                <h2 class="text-xl font-bold mb-3 title-font text-gray-900">Post Type</h2>
+                <div class="flex space-x-6">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="radio" name="post_type" value="article" id="type-article"
+                               onchange="toggleRecipeFields()" 
+                               {% if not post or post.is_article %}checked{% endif %}
+                               class="form-radio h-5 w-5 text-amber-600 focus:ring-amber-600 border-gray-300">
+                        <span class="ml-2 text-lg">Article <i data-feather="file-text" class="h-4 w-4 text-gray-500 ml-1 inline"></i></span>
+                    </label>
+                    <label class="flex items-center cursor-pointer">
+                        <input type="radio" name="post_type" value="recipe" id="type-recipe"
+                               onchange="toggleRecipeFields()" 
+                               {% if post and post.is_recipe %}checked{% endif %}
+                               class="form-radio h-5 w-5 text-amber-600 focus:ring-amber-600 border-gray-300">
+                        <span class="ml-2 text-lg">Recipe <i data-feather="book-open" class="h-4 w-4 text-gray-500 ml-1 inline"></i></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Common Fields: Title, Tags -->
+            <div class="bg-white p-6 rounded-xl shadow-xl border border-gray-100 space-y-4" data-aos="fade-up" data-aos-delay="100">
+                <label for="post_title" class="block text-lg font-medium text-gray-900">Post Title</label>
+                <input type="text" name="post_title" id="post_title" required
+                       value="{% if post %}{{ post.title }}{% endif %}"
+                       placeholder="A catchy title for your post..."
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition duration-200">
+
+                <label for="post_tags" class="block text-lg font-medium text-gray-900 pt-2">Tags (e.g., #Vegan #Gluten_Free, separated by space)</label>
+                <input type="text" name="post_tags" id="post_tags"
+                       value="{% if post %}{{ post.tags|join:' ' }}{% endif %}"
+                       placeholder="#Breakfast #Quick #Healthy"
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition duration-200">
+            </div>
+
+            <!-- Recipe Specific Fields (Conditional) -->
+            <div id="recipe-fields" class="bg-white p-6 rounded-xl shadow-xl border border-gray-100" style="display: none;" data-aos="fade-up" data-aos-delay="200">
+                <h2 class="text-xl font-bold mb-4 flex items-center title-font text-gray-900">
+                    <i data-feather="list" class="h-5 w-5 text-red-500 mr-2"></i> Recipe Ingredients
+                </h2>
+                
+                <div id="ingredients-container" class="space-y-3 mb-4">
+                    <!-- Mock Ingredient Row (To be dynamic in Django) -->
+                    <div class="flex gap-3 items-center ingredient-row">
+                        <input type="text" name="quantity" placeholder="Quantity (e.g., 2)" value="" class="w-1/4 px-3 py-2 border rounded-lg focus:ring-amber-500 focus:border-amber-500">
+                        <input type="text" name="unit" placeholder="Unit (e.g., cups)" value="" class="w-1/4 px-3 py-2 border rounded-lg focus:ring-amber-500 focus:border-amber-500">
+                        <input type="text" name="name" placeholder="Ingredient Name (e.g., flour)" value="" class="flex-grow px-3 py-2 border rounded-lg focus:ring-amber-500 focus:border-amber-500">
+                        <button type="button" onclick="removeIngredient(this)" class="text-red-500 hover:text-red-700 p-2 rounded-full transition"><i data-feather="x" class="h-5 w-5"></i></button>
+                    </div>
+                </div>
+
+                <button type="button" onclick="addIngredientRow()" 
+                        class="text-blue-600 hover:text-blue-800 font-medium py-2 px-4 border border-blue-500 rounded-lg transition duration-200 hover:bg-blue-50 flex items-center">
+                    <i data-feather="plus" class="h-4 w-4 mr-1"></i> Add Ingredient
+                </button>
+            </div>
+
+            <!-- Content Body -->
+            <div class="bg-white p-6 rounded-xl shadow-xl border border-gray-100" data-aos="fade-up" data-aos-delay="300">
+                <label for="post_content" class="block text-lg font-medium text-gray-900">Post Content / Instructions</label>
+                <textarea name="post_content" id="post_content" rows="15" required
+                          placeholder="Write your detailed article or recipe instructions here..."
+                          class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition duration-200">{% if post %}{{ post.content }}{% endif %}</textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="pt-6 flex flex-col sm:flex-row justify-end gap-4" data-aos="fade-up" data-aos-delay="400">
+                
+                <!-- Save Draft Button -->
+                <button type="submit" name="action" value="draft"
+                        class="flex-1 sm:flex-none bg-draft-yellow text-gray-800 font-semibold py-3 px-6 rounded-lg hover:bg-amber-500 transition duration-300 shadow-lg flex items-center justify-center">
+                    <i data-feather="archive" class="h-5 w-5 mr-2"></i> Save as Draft
+                </button>
+                
+                <!-- Publish Button -->
+                <button type="submit" name="action" value="publish"
+                        class="flex-1 sm:flex-none bg-amber-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-amber-700 transition duration-300 shadow-xl transform hover:scale-[1.01] flex items-center justify-center">
+                    <i data-feather="upload" class="h-5 w-5 mr-2"></i> Publish to Feed
+                </button>
+            </div>
+
+        </form>
+        
+        <script src="{% static 'js/post_creation_edit.js' %}"></script>
+</body>
+</html>
