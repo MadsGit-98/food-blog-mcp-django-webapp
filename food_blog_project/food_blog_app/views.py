@@ -24,3 +24,6 @@ def userProfileView(request):
 
 def postCreationEditView(request): 
     return render(request, template_name='food_blog_app/post_creation_edit.html')
+
+def draftsView(request): 
+    return render(request, template_name='food_blog_app/drafts.html')

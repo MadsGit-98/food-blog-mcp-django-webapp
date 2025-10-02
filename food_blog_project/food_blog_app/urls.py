@@ -12,5 +12,6 @@ urlpatterns = [
     path('post_view/', view=views.postviewView, name="post_view"),
     path('user_profile/', view=views.userProfileView, name="user_profile"),
     path('post_creation_edit/', view=views.postCreationEditView, name="post_creation_edit"),
+    path('darfts/', view=views.draftsView, name="drafts"),
     path('logout/', auth_views.LogoutView.as_view(next_page=reverse_lazy('home')), name='logout'),
 ]
