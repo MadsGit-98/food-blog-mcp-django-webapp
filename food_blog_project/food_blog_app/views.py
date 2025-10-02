@@ -15,3 +15,6 @@ def feedView(request):
 
 def bloggerDashboardView(request): 
     return render(request, template_name='food_blog_app/blogger_dashboard.html')
+
+def postviewView(request):
+    return render(request, template_name='food_blog_app/post_view.html')

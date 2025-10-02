@@ -1,0 +1,277 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodie Blog | Post Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;极;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/post_view.css' %}">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="{% url 'feed' %}" class="p-2 mr-2 text-gray-500 hover:text-gray-700">
+                        <i data-feather="arrow-left" class="h-5 w-5"></i>
+                    </a>
+                    <span class="title-font text-xl font-bold text-amber-600">Foodie</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button class="p-2 text-gray-500 hover:text-gray-700">
+                        <i data-feather="search" class="h-5 w-5"></i>
+                    </button>
+                    <button class="p-2 text-gray-500 hover:text-gray-700">
+                        <i data-feather="bell" class="h-5 w-5"></i>
+                    </button>
+                    {% if user.isBlogger %}
+                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                            <i data-feather="bar-chart-2" class="h-5 w-5"></i>
+                        </button>
+                    {% endif %}
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="p-2 text-gray-500 hover:text-gray-700">
+                            <i data-feather="log-out" class="h-4 w-4 mr-3"></i> 
+                        </button>
+                    </form>
+                    <div class="flex items-center">
+                        <img class="h-8 w-8 rounded-full" src="http://static.photos/people/200x200/2" alt="User profile">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Post Content -->
+    <main class="max-w-4xl mx-auto px-4 py-6">
+        <!-- Post Header -->
+        <div class="mb-6">
+            <div class="flex items-center mb-4">
+                <img class="h-10 w-10 rounded-full" src="http://static.photos/people/200x200/3" alt="Author">
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-900">Sarah Miller</p>
+                    <p class="text-xs text-gray-500">Posted 2 hours ago</p>
+                </div>
+            </div>
+            
+            <h1 class="title-font text-3xl font-bold text-gray-900 mb-4">Mediterranean Quinoa Bowl</h1>
+            
+            <div class="flex flex-wrap gap-2 mb-4">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Vegan
+                </span>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    Healthy
+                </span>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                    Mediterranean
+                </span>
+            </div>
+
+            <!-- Rating Display -->
+            <div class="flex items-center mb-6">
+                <div class="flex space-x-1 text-amber-400">
+                    <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                    <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                    <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                    <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                    <i data-feather="star" class="w-5 h-5"></i>
+                </div>
+                <span class="ml-2 text-sm text-gray-500">4.2 (16 reviews)</span>
+            </div>
+        </div>
+
+        <!-- Featured Image -->
+        <img class="w-full h-64 sm:h-96 object-cover rounded-lg mb-8" src="http://static.photos/food/640x360/6" alt="Mediterranean Quinoa Bowl">
+
+        <!-- Post Content -->
+        <div class="prose max-w-none mb-8">
+            <p class="text-gray-700 mb-4">This refreshing Mediterranean quinoa bowl is packed with protein, fresh vegetables, and a tangy lemon dressing. It's perfect for summer lunches and can be prepared in advance for meal prep!</p>
+            
+            <h2 class="title-font text-2xl font-semibold text-gray-900 mb-4">Ingredients</h2>
+            <ul class="ingredient-list space-y-2 mb-6">
+                <li>1 cup quinoa, rinsed</li>
+                <li>2 cups vegetable broth</li>
+                <li>1 cucumber, diced</li>
+                <li>2 cups cherry tomatoes, halved</li>
+                <li>1 red onion, thinly sliced</li>
+                <li>1 cup kalamata olives, pitted and halved</li>
+                <li>1 cup crumbled feta cheese (optional for vegan version)</li>
+                <li>½ cup fresh parsley, chopped</li>
+                <li>¼ cup fresh mint, chopped</li>
+            </ul>
+
+            <h3 class="title-font text-xl font-semibold text-gray-900 mb-3">For the Dressing:</h3>
+            <ul class="ingredient-list space-y-2 mb-6">
+                <li>¼ cup extra virgin olive oil</li>
+                <li>3 tablespoons lemon juice</li>
+                <li>2 cloves garlic, minced</li>
+                <li>1 teaspoon dried oregano</li>
+                <li>Salt and pepper to taste</li>
+            </ul>
+
+            <h2 class="title-font text-2xl font-semibold text-gray-900 mb-4">Instructions</h2>
+            <ol class="space-y-3 mb-6">
+                <li><strong>Cook the quinoa:</strong> In a medium saucepan, bring vegetable broth to a boil. Add quinoa, reduce heat to low, cover, and simmer for 15 minutes until liquid is absorbed. Remove from heat and let stand for 5 minutes. Fluff with a fork and let cool.</li>
+                <li><strong>Prepare vegetables:</strong> While quinoa cools, dice cucumber, halve cherry tomatoes, slice red onion, and prepare olives.</li>
+                <li><strong>Make dressing:</strong> Whisk together olive oil, lemon juice, minced garlic, oregano, salt, and pepper in a small bowl.</li>
+                <li><strong>Combine ingredients:</strong> In a large bowl, combine cooled quinoa, vegetables, olives, and herbs. Pour dressing over and toss gently to combine.</li>
+                <li><strong>Serve:</strong> Divide into bowls and top with crumbled feta cheese if using. Can be served immediately or refrigerated for up to 3 days.</li>
+            </ol>
+
+            <h2 class="title-font text-2xl font-semibold text-gray-900 mb-4">Nutrition Information</h2>
+
+            
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <!-- 1. Nutritional Analysis Button -->
+                <button onclick="performNutritionalAnalysis('{{ post.id }}')" 
+                        class="w-full bg-amber-600 text-white py-2 px-4 rounded-md hover:bg-amber-700 transition-colors">
+                        Perform Nutritional Analysis (Macros)
+                </button>
+                <div id="nutritional-output" class="hidden mt-3 p-4 bg-blue-100 text-blue-800 rounded-xl text-sm border-l-4 border-blue-500">
+                    <!-- Output will be displayed here -->
+                </div>
+
+                <!-- 2. Ingredient Substitution Interface -->
+                <div class="flex flex-col sm:flex-row gap-3 mt-4">
+                    <input type="text" id="substitute-input" placeholder="e.g., Substitute 'dairy butter' with..." 
+                           class="flex-grow px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200">
+                    <button onclick="requestSubstitution('{{ post.id }}')" 
+                            class="bg-amber-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-amber-700 transition duration-300 shadow-md flex items-center justify-center sm:w-auto">
+                        <i data-feather="repeat" class="h-5 w-5 mr-2"></i> Substitute
+                    </button>
+                </div>
+                <div id="substitution-output" class="hidden mt-3 p-4 bg-purple-100 text-purple-800 rounded-xl text-sm border-l-4 border-purple-500">
+                    <!-- Output will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Rating Section -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="title-font text-xl font-semibold text-gray-900 mb-4">Rate this Recipe</h2>
+            <div class="flex items-center mb-4">
+                <div class="flex space-x-1" id="rating-stars">
+                    <button class="text-gray-300 hover:text-amber-400 transition-colors" data-rating="1">
+                        <i data-feather="star" class="w-6 h-6"></i>
+                    </button>
+                    <button class="text-gray-300 hover:text-amber-400 transition-colors" data-rating="2">
+                        <i data-feather="star" class="w-6 h-6"></i>
+                    </button>
+                    <button class="text-gray-300 hover:text-amber-400 transition-colors" data-rating="3">
+                        <i data-feather="star" class="w-6极-6"></i>
+                    </button>
+                    <button class="text-gray-300 hover:text-amber-400 transition-colors" data-rating="4">
+                        <i data-feather="star" class="w-6 h-6"></i>
+                    </button>
+                    <button class="text-gray-300 hover:text-amber-400 transition-colors" data-rating="5">
+                        <i data-feather="star" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                <span class="ml-3 text-sm text-gray-500" id="rating-text">Tap to rate</span>
+            </div>
+            <button class="w-full bg-amber-600 text-white py-2 px-4 rounded-md hover:bg-amber-700 transition-colors">
+                Submit Rating
+            </button>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="title-font text-xl font-semibold text-gray-900 mb-4">Comments (8)</h2>
+            
+            <!-- Comment Form -->
+            <div class="mb-6">
+                <textarea placeholder="Add a comment..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500" rows="3"></textarea>
+                <button class="mt-2 bg-amber-600 text-white py-2 px-4 rounded-md hover:bg-amber-700 transition-colors">
+                    Post Comment
+                </button>
+            </div>
+
+            <!-- Comments List -->
+            <div class="space-y-4">
+                <!-- Comment 1 -->
+                <div class="flex items-start">
+                    <img class="h-8 w-8 rounded-full" src="http://static.photos/people/200x200/7" alt="User">
+                    <div class="ml-3 flex-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-900">John Doe</span>
+                            <span class="text-xs text-gray-500">1 hour ago</span>
+                        </div>
+                        <p class="text-sm text-gray-700 mt-1">This looks amazing! I'm definitely trying this for meal prep next week. How long does it keep in the refrigerator?</p>
+                        <div class="flex items-center mt-2 space-x-3">
+                            <button class="text-xs text-gray-500 hover:text-amber-600">Like (3)</button>
+                            <button class="text-xs text-gray-500 hover:text-amber-600">Reply</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment 2 -->
+                <div class="flex items-start">
+                    <img class="h-8 w-8 rounded-full" src="http://static.photos/people/200x200/8" alt="User">
+                    <div class="ml-3 flex-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-900">Jane Smith</span>
+                            <span class="text-xs text-gray-500">2 hours ago</span>
+                        </div>
+                        <p class="text-sm text-gray-700 mt-1">I made this yesterday and it was delicious! I added some chickpeas for extra protein and it turned out great.</p>
+                        <div class="flex items-center mt-2 space-x-3">
+                            <button class="text-xs text-gray-500 hover:text-amber-600">Like (5)</button>
+                            <button class="text-xs text-gray-500 hover:text-amber-600">Reply</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment 3 -->
+                <div class="flex items-start">
+                    <img class="h-8 w-8 rounded-full" src="http://static.photos/people/200x200/9" alt="User">
+                    <div class="ml-3 flex-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-900">Mike Johnson</span>
+                            <span class="text-xs text-gray-500">3 hours ago</span>
+                        </div>
+                        <p class="text-sm text-gray-700 mt-1">The dressing is perfect! Not too acidic and just the right amount of garlic. Will be making this again.</p>
+                        <div class="flex items-center mt-2 space-x-3">
+                            <button class="text-xs text极-500 hover:text-amber-600">Like (2)</button>
+                            <button class="text-xs text-gray-500 hover:text-amber-600">Reply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation (Mobile) -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
+        <div class="flex justify-around py-3">
+            <a href="feed.html" class="flex flex-col items-center text-gray-500 hover:text-amber-600">
+                <i data-feather="home" class="h-5 w-5"></i>
+                <span class="text-xs mt-1">Feed</span>
+            </a>
+            <a href="#" class="flex flex-col items-center text-gray-500 hover:text-amber-600">
+                <i data-feather="bookmark" class="h-5 w-5"></i>
+                <span class="text-xs mt-1">Save</span>
+            </a>
+            <a href="#" class="flex flex-col items-center text-gray-500 hover:text-amber-600">
+                <i data-feather="share" class="h-5 w-5"></i>
+                <span class="text-xs mt-1">Share</span>
+            </a>
+            <a href="#" class="flex flex-col items-center text-gray-500 hover:text-amber-600">
+                <i data-feather="message-square" class="h-5 w-5"></i>
+                <span class="text-xs mt-1">Comment</span>
+            </a>
+        </div>
+    </div>
+    <script src="{% static 'js/post_view.js' %}"></script>
+</body>
+</html>

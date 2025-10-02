@@ -1,0 +1,4 @@
+.ingredient-list li::before {
+    content: "•";
+    @apply text-amber-600 font-bold inline-block w-4 ml-0;
+}
