@@ -18,3 +18,6 @@ def bloggerDashboardView(request):
 
 def postviewView(request):
     return render(request, template_name='food_blog_app/post_view.html')
+
+def userProfileView(request): 
+    return render(request, template_name='food_blog_app/user_profile.html')
